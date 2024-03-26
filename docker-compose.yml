@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  flexmeasures:
+    image: lfenergy/flexmeasures:latest
+    container_name: flexmeasures-tutorial-fm
+    ports:
+      - "5000:5000"
+    networks:
+      - flexmeasures_network
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:fm-db-passwd@db:5432/flexmeasures-db
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=notsecret
+      - FLEXMEASURES_ENV=development
+      - LOGGING_LEVEL=INFO
+      - MAIL_SERVER = smtp.gmail.com
+      - MAIL_PORT = 587
+      - MAIL_USE_TLS = True  # Example: True
+      - MAIL_USE_SSL = False  # Example: False
+      - MAIL_USERNAME = projects.gepee@gmail.com
+      - MAIL_PASSWORD = Anything123!  # Example: "your_password"
+      - MAIL_DEFAULT_SENDER = ("FlexMeasures", "projects.gepee@gmail.com") 
+    depends_on:
+      - db
+      - redis
+    #command: bash -c "flexmeasures db upgrade &"
+
+  db:
+    image: postgres:latest
+    container_name: flexmeasures-tutorial-db
+    networks:
+      - flexmeasures_network
+    environment:
+      - POSTGRES_PASSWORD=fm-db-passwd
+      - POSTGRES_DB=flexmeasures-db
+
+  redis:
+    image: redis:latest
+    container_name: flexmeasures-tutorial-redis
+    networks:
+      - flexmeasures_network
+
+networks:
+  flexmeasures_network:
+    driver: bridge

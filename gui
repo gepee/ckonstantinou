@@ -1,0 +1,58 @@
+import tkinter as tk
+from tkinter import filedialog, simpledialog
+
+def select_file():
+    file_path = filedialog.askopenfilename()
+    file_label.config(text="Selected File: " + file_path)
+
+def clear_display():
+    display.delete('1.0', tk.END)
+
+def get_additional_info():
+    asset_number = simpledialog.askstring("Input", "Enter Asset Number:")
+    sensor_number = simpledialog.askstring("Input", "Enter Sensor Number:")
+    starting_date = simpledialog.askstring("Input", "Enter Starting Date:")
+    duration = simpledialog.askstring("Input", "Enter Duration:")
+    unit = simpledialog.askstring("Input", "Enter Unit:")
+    return asset_number, sensor_number, starting_date, duration, unit
+
+def add_data(asset_type):
+    asset_number, sensor_number, starting_date, duration, unit = get_additional_info()
+    # Placeholder for adding data to FlexMeasures
+    display_message(f"{asset_type} Data Added - Asset Number: {asset_number}, Sensor Number: {sensor_number}, Starting Date: {starting_date}, Duration: {duration}, Unit: {unit}")
+
+def display_message(message):
+    display.insert(tk.END, message + "\n")
+
+def post_data():
+    # Placeholder for posting data to FlexMeasures
+    display_message("Data Posted to FlexMeasures")
+
+window = tk.Tk()
+window.title("FlexMeasures Data Interface")
+
+file_button = tk.Button(window, text="Select File", command=select_file, height=2)
+file_button.pack(pady=5)
+
+file_label = tk.Label(window, text="No File Selected", wraplength=300)
+file_label.pack(pady=5)
+
+buttons_info = [
+    ("Add Solar", lambda: add_data("Solar")),
+    ("Add Wind", lambda: add_data("Wind")),
+    ("Add Residential Consumer", lambda: add_data("Residential Consumer")),
+    ("Add RTP", lambda: add_data("RTP")),
+    ("Add DG", lambda: add_data("DG")),
+]
+
+for btn_text, command in buttons_info:
+    btn = tk.Button(window, text=btn_text, command=command, height=2, width=len(btn_text)+10)
+    btn.pack(pady=5)
+
+post_button = tk.Button(window, text="Post Data", command=post_data, height=2, width=20)
+post_button.pack(pady=5)
+
+display = tk.Text(window, height=10, width=50)
+display.pack(pady=5)
+
+window.mainloop()
