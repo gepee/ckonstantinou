@@ -10,7 +10,7 @@ services:
       - flexmeasures_network
     environment:
       - SQLALCHEMY_DATABASE_URI=postgresql://postgres:fm-db-passwd@db:5432/flexmeasures-db
-      - REDIS_URL=redis://redis:6379/0
+      - REDIS_URL=redis://redis:6379
       - SECRET_KEY=notsecret
       - FLEXMEASURES_ENV=development
       - LOGGING_LEVEL=INFO
