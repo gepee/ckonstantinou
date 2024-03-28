@@ -12,7 +12,7 @@ subprocess.run("docker-compose up -d",shell=True)
 subprocess.run("flexmeasures db upgrade",shell=True)
 # Example usage
 container_name_or_id = 'flexmeasures-tutorial-fm'
-cli_command = ['flexmeasures db upgrade', "flexmeasures add account --name  gepee","flexmeasures add user --username gepee --email projects.gepee@gmail.com --account-id 1 --roles=admin"]
+cli_command = ['flexmeasures db upgrade', "flexmeasures add account --name  gepee","flexmeasures add user --username gepee --email projects.gepee@gmail.com --account-id 1 --roles=admin","flexmeasures add initial-structure"]
 for cmd in cli_command:
     execute_cli_command(container_name_or_id, cmd)
     print(cmd)
