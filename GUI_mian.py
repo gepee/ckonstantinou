@@ -120,13 +120,13 @@ def schedule():
     Q = pulp.LpVariable.dicts("Q", times, lowBound=Qmin, upBound=Qmax)
     Z = pulp.LpVariable.dicts("Z", times, lowBound=Zmin, upBound=Zmax)
 
-    cost = pulp.lpSum(P[t]*(L[t] +S[t] + Q[t]-W[t]) for t in times)
+    cost = pulp.lpSum(P[t]*(L[t] +S[t] + Q[t]+W[t]) for t in times)
     model += cost
 
     for t in times:
         model += Z[t] >= Zmin
         model += Z[t] <= Zmax
-        model += L[t] + S[t] + Q[t] -W[t] >= 0
+        model += L[t] + S[t] + Q[t] +W[t] >= 0
 
 
     for t in range(T-1):  # We iterate till T-1 because there's no t+1 for the last time step
@@ -435,7 +435,7 @@ def display_message(message):
     display.insert(tk.END, str(message) + "\n")
 
 window = tk.Tk()
-window.title("FlexMeasures Data Interface")
+window.title("Gepee-FlexMeasures Data Interface")
 add_scheduler_button = tk.Button(window, text="Schedule", command=schedule, height=2)
 add_scheduler_button.pack(pady=5)
 add_sensor_button = tk.Button(window, text="Add Sensor", command=add_sensor, height=2)

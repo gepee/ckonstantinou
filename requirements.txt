@@ -1,0 +1,13 @@
+python==3.8
+paho-mqtt==1.6
+matplotlib
+requests
+webbrowser
+pulp
+csv
+json
+threading
+tkinter
+time
+random
+datetime
